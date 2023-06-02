@@ -1,4 +1,4 @@
-# donation-to-educator-dApp -- from Creation to Deployment
+# dApp-donation-to-educator -- from Creation to Deployment
 In this tutorial, we will create, test, and deploy a smart contract called Donation. This contract will allow online educators to receive donations for the free content they provide.
 
 ## Backend
