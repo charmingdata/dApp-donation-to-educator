@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.18;
 
 // An informative description of Events: https://ethereum.stackexchange.com/a/56880/120832
 
