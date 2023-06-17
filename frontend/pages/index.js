@@ -5,20 +5,10 @@ import { providers, Contract, utils } from "ethers";
 import { useEffect, useRef, useState } from "react";
 import { MY_CONTRACT_ADDRESS, abi } from "../constants";
 
-/*
-Everything works ok, but I get this error in my metamask wallet when using this code:
-"We noticed that the current website tried to use the removed window.web3 API. 
-If the site appears to be broken, please click here for more information."
-
-What can we do to remove this error? I think it's because I'm using web3modal, but I'm not sure.
-https://github.com/MetaMask/metamask-extension/issues/10408#issuecomment-775966822
-https://docs.metamask.io/wallet/how-to/migrate-api/#replace-windowweb3
-*/
-
 export default function Home() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [donationReason, setDonationReason] = useState("dd");
+  const [donationReason, setDonationReason] = useState("");
   const [donationAmount, setDonationAmount] = useState(0);
   const web3ModalRef = useRef();
 
@@ -73,25 +63,6 @@ export default function Home() {
         value: donationAmount, // donation is in wei
       });
       setLoading(true);
-
-      // 1 ***********************************
-      // // get the emitted event
-      // const receipt = await tx.wait();
-      // setLoading(false);
-      // // ** what's the difference between logs data and event args and topics? **
-      // //     ** when should I use which?  **
-      // const data = receipt.logs[0].data;
-      // console.log(data);
-
-      // console.log(receipt.events[0].args); // ** what is json.stringify **
-      // // console.log(
-      // //   JSON.stringify(receipt.events[0].args.newSentence.toString())
-      // // );
-      // ***********************************
-
-      // 2 ***********************************
-      // ** what's the difference between getting events via receipt (above) vs donationContract.on() (below)? **
-      // ** when using  donationContract.on() the browser console doesn't show anything the first time. Any idea why? **
       await tx.wait();
       setLoading(false);
       donationContract.on(
@@ -104,39 +75,37 @@ export default function Home() {
             timestamp: timestamp.toString(),
             data: event,
           };
-          console.log(JSON.stringify(info, null, 4)); // ** what does 4 do here? **
+          console.log(JSON.stringify(info, null, 4));
           alert(`Thank you for your donation of ${amount} Wei!`);
         }
       );
-      // ***********************************
     } catch (err) {
       console.error(err);
     }
   };
 
-  // get filtered events where the donation amount is greater than 10 wei
   const getDonationEvents = async () => {
     try {
-      const provider = await getProviderOrSigner(); // ** When do I need to include true in the parenthesis? **
-      // ** Can I use the same const donationContract variable or do i need to make it a let type?  **
-      //     ** I guess the above is more of a js question. Can the same const variables be used multiple times?  **
+      const provider = await getProviderOrSigner();
       const donationContract = new Contract(MY_CONTRACT_ADDRESS, abi, provider);
       const filter = donationContract.filters.LogData(null, null, null, null);
       const events = await donationContract.queryFilter(filter);
-      const filteredEvents = events.filter((event) => event.args.amount > 10);
-      // write a for loop to print out the filtered events and convert the hex donation number to its equivalent integer
+      const filteredEvents = events.filter((event) => event.args.amount > 45);
       for (let i = 0; i < filteredEvents.length; i++) {
-        const amounts = utils.formatUnits(
+        const weiAmount = utils.formatUnits(
           filteredEvents[i].args[0]["_hex"],
           "wei"
         );
-        console.log(amounts);
-        console.log(filteredEvents[i].args[1]);
-        console.log(filteredEvents[i].args[2]);
+        const eventTimestamp = new Date(filteredEvents[i].args[3] * 1000);
+
+        console.log(eventTimestamp);
+        console.log(`Amount: ${weiAmount}`);
+        console.log(`Reason: ${filteredEvents[i].args[1]}`);
+        console.log(`Donator's wallet address: ${filteredEvents[i].args[2]}`);
         console.log("----------------");
       }
 
-      // console.log(filteredEvents); // ** why are there 2 topics in each array in the console? I can show you this when we meet. **
+      console.log(filteredEvents);
     } catch (err) {
       console.error(err);
     }
@@ -181,11 +150,11 @@ export default function Home() {
             Welcome to the Educator Donation dApp!
           </h1>
           <div className={styles.description}>
-            A contract where you can donate to online educators.
+            A contract where you can thank and donate to online educators.
           </div>
           <br></br>
           <div>
-            <label>Reason of Donation: </label>
+            <label>Reason for donation: </label>
             <input
               type="text"
               value={donationReason}
@@ -193,7 +162,7 @@ export default function Home() {
               style={{ marginRight: ".5rem" }}
             />
             <br></br>
-            <label>Donation Amount: </label>
+            <label>Donation amount (wei): </label>
             <input
               type="number"
               value={donationAmount}
@@ -209,7 +178,7 @@ export default function Home() {
               onClick={getDonationEvents}
               style={{ cursor: "pointer", backgroundColor: "blue" }}
             >
-              Get Donation Events
+              See donations over 45 wei
             </button>
           </div>
         </div>
