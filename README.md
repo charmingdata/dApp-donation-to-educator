@@ -13,13 +13,13 @@ cd backend
 2. Set up a Hardhat project. Install the necessary libraries, by typing in the terminal:
 ```
 npm init --yes
-npm install --save-dev hardhat @nomicfoundation/hardhat-chai-matchers chai @nomiclabs/hardhat-ethers ethers
+npm install --save-dev --save-exact hardhat@2.14.0
 npm install dotenv
 ```
 
 3. This library might be necessary to install as well, especially if you're a Windows user.
 ```
-npm install --save-dev @nomicfoundation/hardhat-toolbox
+npm install --save-dev @nomicfoundation/hardhat-toolbox@2
 ```
 
 4. Make sure you are still in the `backend` directory. Now, create a sample contract project by typing in the terminal:
