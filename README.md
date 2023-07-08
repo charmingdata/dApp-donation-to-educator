@@ -30,7 +30,7 @@ npx hardhat
 
 5. Open the `backend` folder and remove any present contracts inside the `contracts` folder. Insert your `Donation` contract.
 
-# 6. Now, inside the `scripts` folder, replace the contect of the `deploy.js` file with the [deploy.js code from this project](https://google.com).
+6. Now, inside the `scripts` folder, replace the contect of the `deploy.js` file with the [deploy.js code from this project](https://google.com).
 
 7. Create a `.env` file inside the `backend` folder. This will be used to store your wallet key and your Quicknode endpoint. A QuickNode API endpoint gives you quick access to a network of nodes. 
 
