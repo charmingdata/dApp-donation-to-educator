@@ -49,7 +49,7 @@ PRIVATE_KEY="your-wallet-private-key-goes-here-inside-the-quotation-marks"
 ```
 npx hardhat compile
 ```
-- Every time you modify your contract (`Donation`), you will have to repeat the above compile step.
+- Every time you modify your contract, you will have to repeat the above compile step.
 
 10. With your contract compiled, now we can deploy it to the sepolia testnet. In your terminal type:
 ```
