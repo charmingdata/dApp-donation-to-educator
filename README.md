@@ -61,9 +61,9 @@ Go to https://sepolia.etherscan.io/ and insert the contract address into the Exp
 - Save this address somewhere. Don't lose it!
 
 ## Testing
-Every Contract should be tested before deployment. Here we deployed first becuause it's freaking exciting to see our contract deployed and because we're using a testnet. 
+Every Contract should be tested before deployment. Here we deployed first becuause it's freaking exciting to see our contract deployed and because we're using a testnet. But we need tests to make sure our contract has no bugs and is secure.
 
-# 1. Open the `test` folder and remove any present files inside of it. Create a new file called `testing.js`, and insert the [testing.js code from this project](https://google.com).
+1. Open the `test` folder and remove any present files inside of it. Create a new file called `testing.js`, and insert the [testing.js code from this project](https://google.com).
 
 2. Go back to the terminal, make sure you're in the `backend` directory, and type: 
 ```
@@ -71,3 +71,12 @@ npx hardhat test
 ```
 
 ## Frontend
+In this section of the tutorial we'll create a dApp (decentralized app) that will connect to your contract and its functions, allowing you to  interact with it. In other words, we're building an interface for the contract. 
+
+1. Open the terminal (command line) and go into the `donation-to-educator` directory. Create a sample Next app by typing:
+```
+npx create-next-app@13 frontend
+```
+- Make sure to choose these settings.
+
+![image](https://github.com/charmingdata/dApp-simple-storage/assets/94773218/28765958-6c47-4eed-a6ad-e1093435cf30)
