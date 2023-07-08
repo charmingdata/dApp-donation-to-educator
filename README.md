@@ -80,3 +80,42 @@ npx create-next-app@13 frontend
 - Make sure to choose these settings.
 
 ![image](https://github.com/charmingdata/dApp-simple-storage/assets/94773218/28765958-6c47-4eed-a6ad-e1093435cf30)
+
+2. Before running the sample app, you'll need to remove the `.git` file that was automatically created inside the new `frontend` folder. 
+To remove the file, open a Windows PowerShell and type this command:
+```
+# Linux / macOS
+cd frontend
+rm -rf .git
+
+# Windows
+cd frontend
+rm -r -fo .git
+```
+
+3. Install these packages using your terminal (you should still be in the `frontend` directory).
+```
+npm install web3modal
+npm install ethers@5
+```
+
+4. Create a new folder called `constants` within the `frontend` directory. Inside the `constants` folder create a new file called `index.js`. Add the following code inside `index.js`. 
+```
+export const MY_CONTRACT_ADDRESS = "MY_CONTRACT_ADDRESS";
+export const abi = MY_ABI;
+```
+- Replace the `MY_ABI` with the abi array that can be found in the following file:
+`backend/artifacts/contracts/Donation.sol/Donation.json`
+
+- Replace the `MY_CONTRACT_ADDRESS` with the address of the contract that you deployed in the Backend section of this tutorial. 
+
+5. Finally, to build the interface of the contract, open the `index.js` file under the `pages` folder (in the `frontend` folder) and replace its content with the [index.js code from this project](https://github.com/charmingdata/dApp-simple-storage/blob/main/frontend/pages/index.js).
+
+6. Add the Charming Data images using the instructions below. Once you understand how to add images to your app, feel free to replace with your own images, in which case you would need to update the images' names inside the `pages/index.js` file (lines 143 & 154)
+  - Add the [logo-charmingdata-small.ico](https://raw.githubusercontent.com/charmingdata/dApp-simple-storage/main/frontend/public/logo-charmingdata-small.ico) and [logocharmingdata.png](https://github.com/charmingdata/dApp-simple-storage/blob/main/frontend/public/logocharmingdata.png) to the public folder inside the frontend directory. Do not change image names.
+
+7. Go back to your terminal; make sure your in the `frontend` directory and type:
+```
+npm run dev
+```
+
