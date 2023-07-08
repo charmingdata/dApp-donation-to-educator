@@ -34,13 +34,16 @@ npx hardhat
 
 7. Create a `.env` file inside the `backend` folder. This will be used to store your wallet key and your Quicknode endpoint. A QuickNode API endpoint gives you quick access to a network of nodes. 
 
-Add these two lines inside the `.env` file, and update the content inside the quotation marks:
+- Add these two lines inside the `.env` file, and update the content inside the quotation marks:
 ```
 QUICKNODE_HTTP_URL="your-quicknode-http-provider-goes-here-inside-the-quotation-marks"
 PRIVATE_KEY="your-wallet-private-key-goes-here-inside-the-quotation-marks"
 ```
 
-# 8. Open the `hardhat.config.js` file inside the `backend` folder and replace its content with the [hardhat.config.js code from this project](https://google.com). 
+- [video on setting up your digital wallet](https://youtu.be/kHF70SWFTYU)
+- [video on setting up your Quicknode](https://youtu.be/xxkT2qpg4g8)
+
+8. Open the `hardhat.config.js` file inside the `backend` folder and replace its content with the [hardhat.config.js code from this project](https://google.com). 
 
 9. Compile your Contract by going back to your terminal (ensure you are in the `backend` directory). And type:
 ```
