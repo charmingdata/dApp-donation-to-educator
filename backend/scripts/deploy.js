@@ -1,16 +1,14 @@
 const { ethers } = require("hardhat");
+// const hre = require("hardhat");
 
 async function main() {
-  const simpleDonationContract = await ethers.getContractFactory("Donation");
+  const donationContract = await ethers.deployContract("Donation");
 
-  // here we deploy the contract
-  const deployedContract = await simpleDonationContract.deploy();
+  await donationContract.waitForDeployment();
 
-  // Wait for it to finish deploying
-  await deployedContract.deployed();
-
-  // print the address of the deployed contract
-  console.log("Donation Contract Creator Address:", deployedContract.address);
+  console.log(
+    `Contract deployed to https://explorer.public.zkevm-test.net/address/${donationContract.target}`
+  );
 }
 
 // Call the main function and catch if there is any error
