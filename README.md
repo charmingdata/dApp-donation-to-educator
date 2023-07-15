@@ -130,6 +130,8 @@ export const abi = MY_ABI;
 
 5. Finally, to build the interface of the contract, open the `index.js` file under the `pages` folder (in the `frontend` folder) and replace its content with the [index.js code from this project](https://raw.githubusercontent.com/charmingdata/dApp-donation-to-educator/main/frontend/pages/index.js).
 
+- Replace the `fromBlock` number on line 119 of the `index.js` file. You will want to insert the first block number used when the contract was created, which can be found on [polygonscan](https://testnet-zkevm.polygonscan.com/) by inserting your contract's address.
+
 6. Add the Charming Data images using the instructions below. Once you understand how to add images to your app, feel free to replace with your own images, in which case you would need to update the path to the images inside the `pages/index.js` file.
 
 - Add the [logo-charmingdata-small.ico](https://raw.githubusercontent.com/charmingdata/dApp-simple-storage/main/frontend/public/logo-charmingdata-small.ico) and [logocharmingdata.png](https://github.com/charmingdata/dApp-simple-storage/blob/main/frontend/public/logocharmingdata.png) to the public folder inside the frontend directory. Do not change image names.
