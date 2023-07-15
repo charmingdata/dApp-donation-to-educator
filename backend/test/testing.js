@@ -3,35 +3,36 @@ const { ethers } = require("hardhat");
 const assert = require("assert");
 const exp = require("constants");
 
-let tx;
-let receipt;
-let onlineEducator;
-let accounts;
-let addr1;
-let addr2;
-
-before(async () => {
-  accounts = await ethers.getSigners();
-  addr1 = accounts[0].address;
-  addr2 = accounts[2].address;
-
-  const Donation = await ethers.getContractFactory("Donation");
-  const simpleDonation = await Donation.deploy();
-  contract = await simpleDonation.deployed();
-  onlineEducator = await contract.onlineEducator();
-
-  console.log(`contract's address: ${contract.address}`);
-  console.log(`accounts[2]: ${addr2}`);
-  console.log(`accounts[0]: ${addr1}`);
-  console.log(`Online educator: ${onlineEducator}`);
-});
-
 describe("Donation testing", () => {
-  it("deploys a contract", async () => {
-    assert.ok(contract.address); // assert.ok checks for truthyness
+  let contract;
+  let tx;
+  let receipt;
+  let onlineEducator;
+  let accounts;
+  let addr1;
+  let addr2;
+  before(async () => {
+    accounts = await ethers.getSigners();
+    addr1 = accounts[0].address;
+    addr2 = accounts[2].address;
+
+    const Donation = await ethers.deployContract("Donation");
+    contract = await Donation.waitForDeployment();
+    onlineEducator = await contract.onlineEducator();
+
+    console.log(`contract's address: ${contract.target}`);
+    console.log(`accounts[2]: ${addr2}`);
+    console.log(`accounts[0]: ${addr1}`);
+    console.log(`Online educator: ${onlineEducator}`);
   });
 
-  it("eth dontaed is removed from donator's account", async () => {
+  it("deploys a contract", async () => {
+    // const contract = await ethers.deployContract("Donation");
+    // await contract.waitForDeployment();
+    assert.ok(contract.target); // assert.ok checks for truthyness
+  });
+
+  it("eth donated is removed from donator's account", async () => {
     // onlineEducator is accounts[0] (contract deployer), so we need to connect with a different account to donate
     const balanceBeforeSendingEth = await ethers.provider.getBalance(addr2);
 
@@ -43,7 +44,7 @@ describe("Donation testing", () => {
     receipt = await tx.wait();
 
     const balanceAfterSendingEth = await ethers.provider.getBalance(addr2);
-    assert(balanceAfterSendingEth > balanceBeforeSendingEth);
+    assert(balanceAfterSendingEth < balanceBeforeSendingEth);
   });
 
   it("emit LogData event", async () => {
@@ -54,14 +55,14 @@ describe("Donation testing", () => {
   it("confirm donation reason and amount", async () => {
     tx = await contract
       .connect(accounts[2])
-      .offerDonation("dontaing for private session", {
+      .offerDonation("donating for private session", {
         value: 230000,
       });
-    receipt = await tx.wait();
+    let receipt = await tx.wait();
 
-    // console.log(receipt.events[0].args);
-    expect(receipt.events[0].args.amount).to.eq(230000);
-    expect(receipt.events[0].args.reason).to.eq("dontaing for private session");
+    // create test to check if the event is emitted with the correct parameters
+    expect(receipt.logs[0].args[0]).to.eq(230000);
+    expect(receipt.logs[0].args[1]).to.eq("donating for private session");
   });
 
   it("filter indexed parameters of event", async () => {
