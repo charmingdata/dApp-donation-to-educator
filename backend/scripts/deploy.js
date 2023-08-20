@@ -2,15 +2,12 @@ const { ethers } = require("hardhat");
 // const hre = require("hardhat");
 
 async function main() {
-  // this is the correct code. The code shown in the video is incorrect because it only works
-  // with hardhat version 2.16.0 and toolbox version 3. In this tutorial we used 
-  // hardhat version 2.14.0 and toolbox version 2
-  
-  const shelterContract = await ethers.getContractFactory("ShelterDB");
-  const deployedContract = await shelterContract.deploy();
-  await deployedContract.deployed();
+  const donationContract = await ethers.deployContract("Donation");
+  await donationContract.waitForDeployment();
 
-  console.log("Contract deployed to:", deployedContract.address);
+  console.log(
+    `Contract deployed to https://explorer.public.zkevm-test.net/address/${donationContract.target}`
+  );
 }
 
 // Call the main function and catch if there is any error
